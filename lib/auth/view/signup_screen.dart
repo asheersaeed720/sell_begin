@@ -181,7 +181,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       validator: (value) => value!.isEmpty ? "Required" : null,
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
-      decoration: buildTextFieldInputDecoration(context, hintText: 'Email'),
+      decoration: buildTextFieldInputDecoration(context, txt: 'Email'),
     );
   }
 
@@ -210,7 +210,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       selectorTextStyle: TextStyle(color: Colors.black),
       formatInput: false,
       inputBorder: OutlineInputBorder(),
-      inputDecoration: buildTextFieldInputDecoration(context, hintText: 'Phone No'),
+      inputDecoration: buildTextFieldInputDecoration(context, txt: 'Phone No'),
     );
   }
 
@@ -232,7 +232,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         keyboardType: TextInputType.visiblePassword,
         decoration: buildPasswordInputDecoration(
           context,
-          hintText: 'Password',
+          txt: 'Password',
           suffixIcon: GestureDetector(
             onTap: () {
               authController.obscureText.toggle();
@@ -265,7 +265,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         keyboardType: TextInputType.visiblePassword,
         decoration: buildPasswordInputDecoration(
           context,
-          hintText: 'Confirm password',
+          txt: 'Confirm password',
           suffixIcon: GestureDetector(
             onTap: () {
               authController.obscureText.toggle();

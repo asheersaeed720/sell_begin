@@ -6,7 +6,7 @@ class AppTheme {
   static const Color COLOR_PRIMARY = Color(0xFFF7B301);
   static const Color NEAR_BLACK = Color(0xFF213333);
   static const Color GREY_COLOR = Color(0xff43464B);
-  static const Color COLOR_GREY_CHATEAU = Color(0xffA0A4A8);
+  // static const Color COLOR_GREY_CHATEAU = Color(0xffA0A4A8);
   static const Color COLOR_SCREEN_BG = Color(0xffF4F7FC);
 
   static const String fontName = 'Poppins';

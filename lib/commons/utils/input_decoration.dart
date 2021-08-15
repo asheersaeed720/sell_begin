@@ -3,7 +3,7 @@ import 'package:sell_begin/commons/utils/app_theme.dart';
 
 InputDecoration buildTextFieldInputDecoration(
   context, {
-  required String hintText,
+  required String txt,
   Color fillColor = Colors.white,
   String prefixIconUrl = '',
 }) {
@@ -11,15 +11,12 @@ InputDecoration buildTextFieldInputDecoration(
     contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 22),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8.0),
-      borderSide: BorderSide(style: BorderStyle.none, width: 0),
+      borderSide: BorderSide(style: BorderStyle.solid, width: 0, color: Colors.grey),
     ),
-    hintText: '$hintText',
+    labelText: '$txt',
     isDense: true,
     fillColor: fillColor != Colors.white ? fillColor : Theme.of(context).cardColor,
-    hintStyle: Theme.of(context)
-        .textTheme
-        .headline2!
-        .copyWith(fontSize: 12.0, color: AppTheme.COLOR_GREY_CHATEAU),
+    labelStyle: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 12.0, color: Colors.grey),
     filled: true,
     prefixIcon: prefixIconUrl.isNotEmpty
         ? Padding(
@@ -33,7 +30,7 @@ InputDecoration buildTextFieldInputDecoration(
 
 InputDecoration buildPasswordInputDecoration(
   context, {
-  required String hintText,
+  required String txt,
   Color fillColor = Colors.white,
   required Widget suffixIcon,
 }) {
@@ -41,15 +38,12 @@ InputDecoration buildPasswordInputDecoration(
     contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 22),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8.0),
-      borderSide: BorderSide(style: BorderStyle.none, width: 0),
+      borderSide: BorderSide(style: BorderStyle.solid, width: 0, color: Colors.grey),
     ),
-    hintText: '$hintText',
+    labelText: '$txt',
     isDense: true,
     fillColor: fillColor != Colors.white ? fillColor : Theme.of(context).cardColor,
-    hintStyle: Theme.of(context)
-        .textTheme
-        .headline2!
-        .copyWith(fontSize: 12.0, color: AppTheme.COLOR_GREY_CHATEAU),
+    labelStyle: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 12.0, color: Colors.grey),
     filled: true,
     suffixIcon: suffixIcon,
   );
