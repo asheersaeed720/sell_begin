@@ -1,23 +1,22 @@
 import 'dart:developer';
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sell_begin/auth/model/user.dart';
+import 'package:sell_begin/auth/view/auth_screen.dart';
 import 'package:sell_begin/commons/services/auth_service.dart';
-import 'package:sell_begin/landing/view/landing_screen.dart';
 import 'package:encrypt/encrypt.dart' as EncryptPack;
-import 'package:sell_begin/tab/view/tab_screen.dart';
 
 class AuthController extends GetxController {
   final _authService = Get.find<AuthService>();
 
-  final _storage = GetStorage();
-
   RxBool obscureText = true.obs;
+
+  RxBool isLoading = false.obs;
+
+  RxMap userData = Map().obs;
 
   Rx<UserModel> userModel = UserModel().obs;
 
@@ -69,6 +68,7 @@ class AuthController extends GetxController {
   }
 
   checkUser() {
+    isLoading.value = true;
     _authService.checkUser(userModel.value).then((res) async {
       log('${res.body}', name: 'res');
       if (res.statusCode == 200) {
@@ -78,9 +78,10 @@ class AuthController extends GetxController {
           if (loginRes.statusCode == 200) {
             Map data = loginRes.body['user'];
             data['key'] = apiKey;
-            _storage.write('user', data);
-            log(_storage.read('user').toString(), name: 'saved Vals');
-            Get.offNamed(TabsScreen.routeName);
+            GetStorage getStorage = GetStorage();
+            getStorage.write('user', data);
+            getUserData();
+            Get.offNamed(AuthScreen.routeName);
           }
         }
       } else {
@@ -99,6 +100,22 @@ class AuthController extends GetxController {
           shouldIconPulse: true,
         );
       }
+      isLoading.value = false;
     });
+  }
+
+  signUpUser() async {
+    Response res = await _authService.registerUser(userModel.value);
+    if (res.statusCode == 200) {}
+  }
+
+  getUserData() {
+    userData.value = GetStorage().read('user') == null ? {} : GetStorage().read('user');
+    log('$userData', name: 'stored_user');
+  }
+
+  void logoutUser() {
+    GetStorage().remove('user');
+    Get.offNamed(AuthScreen.routeName);
   }
 }

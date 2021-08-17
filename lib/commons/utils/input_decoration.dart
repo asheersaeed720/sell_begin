@@ -13,10 +13,10 @@ InputDecoration buildTextFieldInputDecoration(
       borderRadius: BorderRadius.circular(8.0),
       borderSide: BorderSide(style: BorderStyle.solid, width: 0, color: Colors.grey),
     ),
-    labelText: '$txt',
+    hintText: '$txt',
     isDense: true,
     fillColor: fillColor != Colors.white ? fillColor : Theme.of(context).cardColor,
-    labelStyle: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 12.0, color: Colors.grey),
+    hintStyle: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 12.0, color: Colors.grey),
     filled: true,
     prefixIcon: prefixIconUrl.isNotEmpty
         ? Padding(
@@ -40,10 +40,10 @@ InputDecoration buildPasswordInputDecoration(
       borderRadius: BorderRadius.circular(8.0),
       borderSide: BorderSide(style: BorderStyle.solid, width: 0, color: Colors.grey),
     ),
-    labelText: '$txt',
+    hintText: '$txt',
     isDense: true,
     fillColor: fillColor != Colors.white ? fillColor : Theme.of(context).cardColor,
-    labelStyle: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 12.0, color: Colors.grey),
+    hintStyle: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 12.0, color: Colors.grey),
     filled: true,
     suffixIcon: suffixIcon,
   );

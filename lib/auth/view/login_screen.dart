@@ -6,6 +6,7 @@ import 'package:sell_begin/auth/controller/auth_controller.dart';
 import 'package:sell_begin/auth/view/signup_screen.dart';
 import 'package:sell_begin/commons/utils/input_decoration.dart';
 import 'package:sell_begin/commons/widgets/custom_button.dart';
+import 'package:sell_begin/commons/widgets/loading_indicator.dart';
 
 class LogInScreen extends StatefulWidget {
   static const String routeName = '/login';
@@ -34,19 +35,23 @@ class _LogInScreenState extends State<LogInScreen> {
                 padding: const EdgeInsets.all(15.0),
                 child: Image.asset(
                   'assets/images/logo.png',
-                  height: MediaQuery.of(context).size.height / 4.5,
+                  height: MediaQuery.of(context).size.height / 5.2,
                   fit: BoxFit.scaleDown,
                 ),
               ),
               const SizedBox(height: 32.0),
+              Text('Email'),
+              const SizedBox(height: 10.0),
               _buildEmailTextField(),
               const SizedBox(height: 20.0),
+              Text('Password'),
+              const SizedBox(height: 10.0),
               _buildPasswordTextField(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
+                    padding: const EdgeInsets.only(top: 6.0),
                     child: TextButton(
                       onPressed: () {},
                       child: const Text(
@@ -62,19 +67,21 @@ class _LogInScreenState extends State<LogInScreen> {
                 ],
               ),
               const SizedBox(height: 16.0),
-              CustomButton(
-                btnTxt: 'Login',
-                onPressed: () {
-                  if (_formKeyLogin.currentState!.validate()) {
-                    _formKeyLogin.currentState!.save();
-                    FocusScopeNode currentFocus = FocusScope.of(context);
-                    if (!currentFocus.hasPrimaryFocus) {
-                      currentFocus.unfocus();
-                    }
-                    authController.checkUser();
-                  }
-                },
-              ),
+              authController.isLoading.value
+                  ? LoadingIndicator()
+                  : CustomButton(
+                      btnTxt: 'Login',
+                      onPressed: () {
+                        if (_formKeyLogin.currentState!.validate()) {
+                          _formKeyLogin.currentState!.save();
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus) {
+                            currentFocus.unfocus();
+                          }
+                          authController.checkUser();
+                        }
+                      },
+                    ),
               const SizedBox(height: 16.0),
               _buildOrDivider(),
               const SizedBox(height: 18.0),

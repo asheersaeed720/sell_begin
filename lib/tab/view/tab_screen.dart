@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sell_begin/auth/controller/auth_controller.dart';
 import 'package:sell_begin/home/view/home_screen.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -9,6 +11,8 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+  final _authController = Get.find<AuthController>();
+
   PageController? _pageController;
   int _page = 0;
 
@@ -100,7 +104,10 @@ class _TabsScreenState extends State<TabsScreen> {
           Icons.add,
           color: Colors.white,
         ),
-        onPressed: () => _pageController!.jumpToPage(2),
+        // onPressed: () => _pageController!.jumpToPage(2),
+        onPressed: () {
+          _authController.logoutUser();
+        },
       ),
     );
   }

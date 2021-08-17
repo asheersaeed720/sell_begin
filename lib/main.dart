@@ -3,11 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sell_begin/auth/binding/auth_binding.dart';
+import 'package:sell_begin/auth/view/auth_screen.dart';
 import 'package:sell_begin/auth/view/login_screen.dart';
 import 'package:sell_begin/auth/view/signup_screen.dart';
 import 'package:sell_begin/commons/utils/app_theme.dart';
 import 'package:sell_begin/home/view/home_screen.dart';
-import 'package:sell_begin/landing/view/landing_screen.dart';
+import 'package:sell_begin/product/view/product_screen.dart';
 import 'package:sell_begin/tab/view/tab_screen.dart';
 
 void main() async {
@@ -32,11 +33,10 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Poppins',
           textTheme: AppTheme.textTheme,
         ),
-        // initialRoute: LandingScreen.routeName,
-        initialRoute: LogInScreen.routeName,
+        initialRoute: AuthScreen.routeName,
         getPages: [
-          GetPage(name: LandingScreen.routeName, page: () => LandingScreen()),
-          GetPage(name: TabsScreen.routeName, page: () => TabsScreen()),
+          GetPage(name: AuthScreen.routeName, page: () => AuthScreen(), binding: AuthBinding()),
+          GetPage(name: TabsScreen.routeName, page: () => TabsScreen(), binding: AuthBinding()),
           GetPage(name: HomeScreen.routeName, page: () => HomeScreen()),
           GetPage(
             name: LogInScreen.routeName,
@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
             binding: AuthBinding(),
           ),
           GetPage(name: SignUpScreen.routeName, page: () => SignUpScreen(), binding: AuthBinding()),
+          GetPage(name: ProductScreen.routeName, page: () => ProductScreen()),
         ],
       );
 }
