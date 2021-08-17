@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sell_begin/commons/utils/app_theme.dart';
 
 InputDecoration buildTextFieldInputDecoration(
   context, {
@@ -9,9 +8,12 @@ InputDecoration buildTextFieldInputDecoration(
 }) {
   return InputDecoration(
     contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 22),
+    enabledBorder: const OutlineInputBorder(
+      borderSide: const BorderSide(color: Colors.grey, width: 0.7),
+      borderRadius: BorderRadius.all(Radius.circular(6.0)),
+    ),
     border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8.0),
-      borderSide: BorderSide(style: BorderStyle.solid, width: 0, color: Colors.grey),
+      borderRadius: BorderRadius.circular(6.0),
     ),
     hintText: '$txt',
     isDense: true,
@@ -36,9 +38,12 @@ InputDecoration buildPasswordInputDecoration(
 }) {
   return InputDecoration(
     contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 22),
+    enabledBorder: const OutlineInputBorder(
+      borderSide: const BorderSide(color: Colors.grey, width: 0.7),
+      borderRadius: BorderRadius.all(Radius.circular(6.0)),
+    ),
     border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8.0),
-      borderSide: BorderSide(style: BorderStyle.solid, width: 0, color: Colors.grey),
+      borderRadius: BorderRadius.circular(6.0),
     ),
     hintText: '$txt',
     isDense: true,

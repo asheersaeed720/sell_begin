@@ -8,7 +8,7 @@ import 'package:sell_begin/auth/view/login_screen.dart';
 import 'package:sell_begin/auth/view/signup_screen.dart';
 import 'package:sell_begin/commons/utils/app_theme.dart';
 import 'package:sell_begin/home/view/home_screen.dart';
-import 'package:sell_begin/product/view/product_screen.dart';
+import 'package:sell_begin/search_product/view/search_product_screen.dart';
 import 'package:sell_begin/tab/view/tab_screen.dart';
 
 void main() async {
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
             binding: AuthBinding(),
           ),
           GetPage(name: SignUpScreen.routeName, page: () => SignUpScreen(), binding: AuthBinding()),
-          GetPage(name: ProductScreen.routeName, page: () => ProductScreen()),
+          GetPage(name: SearchProductScreen.routeName, page: () => SearchProductScreen()),
         ],
       );
 }

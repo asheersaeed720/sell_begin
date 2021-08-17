@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:get/get.dart';
+import 'package:sell_begin/commons/utils/input_decoration.dart';
 import 'package:sell_begin/commons/widgets/product_item.dart';
+import 'package:sell_begin/search_product/view/search_product_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/home';
@@ -14,25 +18,24 @@ class HomeScreen extends StatelessWidget {
         child: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
-              backgroundColor: Colors.blueGrey.withOpacity(0.3),
-              shadowColor: Colors.blueGrey.withOpacity(0.5),
+              backgroundColor: Colors.white,
+              shadowColor: Colors.black87.withOpacity(0.5),
               pinned: false,
               snap: true,
               floating: true,
-              expandedHeight: 142.0,
+              expandedHeight: 148.0,
               flexibleSpace: FlexibleSpaceBar(
-                background: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      Text('Search Box Here'),
-                    ],
-                  ),
+                background: Column(
+                  children: [
+                    const SizedBox(height: 14.0),
+                    _buildLocationTextField(context),
+                    const SizedBox(height: 8.0),
+                    _buildfindProductTextField(context),
+                    const Spacer(),
+                    Image.asset('assets/images/divider.jpg'),
+                  ],
                 ),
               ),
-            ),
-            const SliverToBoxAdapter(
-              child: SizedBox(height: 10.0),
             ),
             SliverPadding(
               padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -52,6 +55,46 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLocationTextField(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: InkWell(
+        onTap: () {
+          Get.to(
+            SearchProductScreen(),
+            transition: Transition.leftToRight,
+            duration: const Duration(milliseconds: 300),
+          );
+        },
+        child: TextFormField(
+          enabled: false,
+          decoration: buildTextFieldInputDecoration(context,
+              prefixIconUrl: 'assets/icons/location.png', txt: 'City'),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildfindProductTextField(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: InkWell(
+        onTap: () {
+          Get.to(
+            SearchProductScreen(),
+            transition: Transition.leftToRight,
+            duration: const Duration(milliseconds: 300),
+          );
+        },
+        child: TextFormField(
+          enabled: false,
+          decoration: buildTextFieldInputDecoration(context,
+              prefixIconUrl: 'assets/icons/search.png', txt: 'Find your product'),
         ),
       ),
     );

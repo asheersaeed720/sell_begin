@@ -120,7 +120,7 @@ class ProductItem extends StatelessWidget {
                     style: TextStyle(fontSize: 13.0),
                   ),
                   Text(
-                    '01 day ago',
+                    '11 Aug',
                     style: TextStyle(fontSize: 10.5),
                     overflow: TextOverflow.ellipsis,
                   ),
