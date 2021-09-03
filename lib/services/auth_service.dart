@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:sell_begin/auth/model/user.dart';
+import 'package:sell_begin/auth/user.dart';
 
 class AuthService extends GetConnect {
   @override
@@ -20,6 +20,7 @@ class AuthService extends GetConnect {
 
   Future<Response> registerUser(UserModel user) {
     var signUpFormData = FormData({
+      'name': '${user.fullName}',
       'email': '${user.email}',
       'phone': '${user.phoneNo}',
       'password': '${user.password}',

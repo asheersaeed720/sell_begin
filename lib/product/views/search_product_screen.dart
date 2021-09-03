@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sell_begin/commons/utils/input_decoration.dart';
-import 'package:sell_begin/commons/widgets/product_item.dart';
+import 'package:sell_begin/utils/input_decoration.dart';
+import 'package:sell_begin/widgets/custom_app_bar.dart';
+import 'package:sell_begin/widgets/product_item.dart';
 
 class SearchProductScreen extends StatefulWidget {
   static const String routeName = '/search-product';
@@ -17,11 +18,7 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).backgroundColor,
-        elevation: 0.0,
-        title: Text('Search', style: TextStyle(fontSize: 16.0)),
-      ),
+      appBar: customAppBar('Search'),
       body: SafeArea(
         child: CustomScrollView(
           slivers: <Widget>[
@@ -36,7 +33,6 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
               flexibleSpace: FlexibleSpaceBar(
                 background: Column(
                   children: [
-                    const SizedBox(height: 14.0),
                     _buildLocationTextField(),
                     const SizedBox(height: 8.0),
                     _buildfindProductTextField(),

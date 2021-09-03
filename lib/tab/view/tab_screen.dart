@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:sell_begin/auth/controller/auth_controller.dart';
+import 'package:sell_begin/chat/views/chat_screen.dart';
 import 'package:sell_begin/home/view/home_screen.dart';
+import 'package:sell_begin/product/views/create_product_ad.dart';
+import 'package:sell_begin/user_profile/view/user_profile_screen.dart';
 
 class TabsScreen extends StatefulWidget {
   static const String routeName = '/tab';
@@ -11,8 +12,6 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-  final _authController = Get.find<AuthController>();
-
   PageController? _pageController;
   int _page = 0;
 
@@ -26,10 +25,10 @@ class _TabsScreenState extends State<TabsScreen> {
         onPageChanged: onPageChanged,
         children: <Widget>[
           HomeScreen(),
+          ChatScreen(),
+          CreateProductAdScreen(),
           HomeScreen(),
-          HomeScreen(),
-          HomeScreen(),
-          HomeScreen(),
+          UserProfileScreen(),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
@@ -104,10 +103,7 @@ class _TabsScreenState extends State<TabsScreen> {
           Icons.add,
           color: Colors.white,
         ),
-        // onPressed: () => _pageController!.jumpToPage(2),
-        onPressed: () {
-          _authController.logoutUser();
-        },
+        onPressed: () => _pageController!.jumpToPage(2),
       ),
     );
   }

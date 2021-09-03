@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
-import 'package:sell_begin/commons/utils/input_decoration.dart';
-import 'package:sell_begin/commons/widgets/product_item.dart';
-import 'package:sell_begin/search_product/view/search_product_screen.dart';
+import 'package:sell_begin/product/views/search_product_screen.dart';
+import 'package:sell_begin/utils/input_decoration.dart';
+import 'package:sell_begin/widgets/product_item.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/home';

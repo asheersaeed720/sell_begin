@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:sell_begin/auth/controller/auth_controller.dart';
-import 'package:sell_begin/commons/utils/input_decoration.dart';
-import 'package:sell_begin/commons/widgets/custom_button.dart';
-import 'package:sell_begin/tab/view/tab_screen.dart';
+import 'package:sell_begin/auth/auth_controller.dart';
+import 'package:sell_begin/utils/input_decoration.dart';
+import 'package:sell_begin/widgets/custom_button.dart';
+import 'package:sell_begin/widgets/loading_indicator.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String routeName = '/sign-up';
@@ -18,59 +18,64 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   GlobalKey<FormState> _formKeySignup = GlobalKey<FormState>();
 
-  final authController = Get.find<AuthController>();
+  final _authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Form(
-            key: _formKeySignup,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildProfilePic(),
-                const SizedBox(height: 10.0),
-                Text('Email'),
-                const SizedBox(height: 10.0),
-                _buildEmailTextField(),
-                const SizedBox(height: 20.0),
-                Text('Mobile'),
-                const SizedBox(height: 10.0),
-                _buildPhoneNoField(),
-                const SizedBox(height: 20.0),
-                Text('Password'),
-                const SizedBox(height: 10.0),
-                _buildPasswordTextField(),
-                const SizedBox(height: 20.0),
-                Text('Confirm Password'),
-                const SizedBox(height: 10.0),
-                _buildConfirmPasswordTextField(),
-                SizedBox(height: 22),
-                CustomButton(
-                  width: double.infinity,
-                  btnTxt: 'Signup',
-                  onPressed: () async {
-                    // if (_formKeySignup.currentState!.validate()) {
-                    //   _formKeySignup.currentState!.save();
-                    //   if (authPvd.image != null) {
-                    //     FocusScopeNode currentFocus = FocusScope.of(context);
-                    //     if (!currentFocus.hasPrimaryFocus) {
-                    //       currentFocus.unfocus();
-                    //     }
-                    //     authPvd.phoneNoVerification(context, authPvd.userFormData);
-                    //   } else {
-                    //     Get.sn
-                    //     customToast('profile_pic_required');
-                    //   }
-                    // }
-                  },
-                ),
-              ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Form(
+              key: _formKeySignup,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildProfilePic(),
+                  const SizedBox(height: 10.0),
+                  const Text('Full name'),
+                  const SizedBox(height: 10.0),
+                  _buildFullNameTextField(),
+                  const SizedBox(height: 10.0),
+                  const Text('Email'),
+                  const SizedBox(height: 10.0),
+                  _buildEmailTextField(),
+                  const SizedBox(height: 20.0),
+                  const Text('Mobile'),
+                  const SizedBox(height: 10.0),
+                  _buildPhoneNoField(),
+                  const SizedBox(height: 20.0),
+                  const Text('Password'),
+                  const SizedBox(height: 10.0),
+                  _buildPasswordTextField(),
+                  const SizedBox(height: 20.0),
+                  const Text('Confirm Password'),
+                  const SizedBox(height: 10.0),
+                  _buildConfirmPasswordTextField(),
+                  const SizedBox(height: 22),
+                  Obx(
+                    () => _authController.isLoading.value
+                        ? LoadingIndicator()
+                        : CustomButton(
+                            width: double.infinity,
+                            btnTxt: 'Signup',
+                            onPressed: () async {
+                              if (_formKeySignup.currentState!.validate()) {
+                                _formKeySignup.currentState!.save();
+                                FocusScopeNode currentFocus = FocusScope.of(context);
+                                if (!currentFocus.hasPrimaryFocus) {
+                                  currentFocus.unfocus();
+                                }
+                                _authController.signUpUser();
+                              }
+                            },
+                          ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -80,7 +85,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget _buildProfilePic() {
     return Container(
-      margin: EdgeInsets.only(top: 25.0),
+      margin: const EdgeInsets.only(top: 25.0),
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: Theme.of(context).accentColor,
@@ -93,7 +98,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
             borderRadius: BorderRadius.circular(100.0),
             child: Image.asset(
               'assets/images/profile_img.png',
-              // width: 120.0,
               height: 124.0,
               fit: BoxFit.cover,
             ),
@@ -103,10 +107,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
+  Widget _buildFullNameTextField() {
+    return TextFormField(
+      onChanged: (value) {
+        _authController.userModel.update((val) {
+          val!.fullName = value.trim();
+        });
+      },
+      validator: (value) => value!.isEmpty ? "Required" : null,
+      keyboardType: TextInputType.name,
+      textInputAction: TextInputAction.next,
+      decoration: buildTextFieldInputDecoration(context, txt: 'Full name'),
+    );
+  }
+
   Widget _buildEmailTextField() {
     return TextFormField(
       onChanged: (value) {
-        authController.userModel.update((val) {
+        _authController.userModel.update((val) {
           val!.email = value.trim();
         });
       },
@@ -120,7 +138,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget _buildPhoneNoField() {
     return InternationalPhoneNumberInput(
       onInputChanged: (PhoneNumber number) {
-        authController.userModel.update((val) {
+        _authController.userModel.update((val) {
           val!.phoneNo = number.phoneNumber!.trim();
         });
       },
@@ -152,15 +170,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Obx(
       () => TextFormField(
         onChanged: (value) {
-          authController.userModel.update((val) {
+          _authController.userModel.update((val) {
             val!.password = value;
           });
         },
-        obscureText: authController.obscureText.value,
+        obscureText: _authController.obscureText.value,
         validator: (value) {
           if (value!.isEmpty) {
             return 'Required';
-          } else if (authController.userModel.value.password.length < 6) {
+          } else if (_authController.userModel.value.password.length < 6) {
             return 'too Short';
           }
           return null;
@@ -171,10 +189,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
           txt: 'Password',
           suffixIcon: GestureDetector(
             onTap: () {
-              authController.obscureText.toggle();
+              _authController.obscureText.toggle();
             },
             child: Icon(
-              authController.obscureText.value ? Icons.visibility : Icons.visibility_off,
+              _authController.obscureText.value ? Icons.visibility : Icons.visibility_off,
             ),
           ),
         ),
@@ -186,16 +204,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Obx(
       () => TextFormField(
         onChanged: (value) {
-          authController.userModel.update((val) {
+          _authController.userModel.update((val) {
             val!.confirmPassword = value;
           });
         },
-        obscureText: authController.obscureText.value,
+        obscureText: _authController.obscureText.value,
         validator: (value) {
           if (value!.isEmpty) {
             return 'Required';
-          } else if (authController.userModel.value.password !=
-              authController.userModel.value.confirmPassword) {
+          } else if (_authController.userModel.value.password !=
+              _authController.userModel.value.confirmPassword) {
             return 'please match password';
           }
           return null;
@@ -206,10 +224,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
           txt: 'Confirm password',
           suffixIcon: GestureDetector(
             onTap: () {
-              authController.obscureText.toggle();
+              _authController.obscureText.toggle();
             },
             child: new Icon(
-              authController.obscureText.value ? Icons.visibility : Icons.visibility_off,
+              _authController.obscureText.value ? Icons.visibility : Icons.visibility_off,
             ),
           ),
         ),

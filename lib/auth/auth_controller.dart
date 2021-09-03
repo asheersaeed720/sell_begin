@@ -1,13 +1,12 @@
 import 'dart:developer';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sell_begin/auth/model/user.dart';
-import 'package:sell_begin/auth/view/auth_screen.dart';
-import 'package:sell_begin/commons/services/auth_service.dart';
+import 'package:sell_begin/auth/user.dart';
+import 'package:sell_begin/auth/views/auth_screen.dart';
+import 'package:sell_begin/services/auth_service.dart';
 import 'package:encrypt/encrypt.dart' as EncryptPack;
+import 'package:sell_begin/utils/custom_snack_bar.dart';
 
 class AuthController extends GetxController {
   final _authService = Get.find<AuthService>();
@@ -85,28 +84,27 @@ class AuthController extends GetxController {
           }
         }
       } else {
-        Get.snackbar(
-          'Error',
-          "This User does'nt exist",
-          margin: EdgeInsets.all(0),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          icon: Icon(
-            Icons.info,
-            color: Colors.white,
-          ),
-          snackPosition: SnackPosition.BOTTOM,
-          snackStyle: SnackStyle.GROUNDED,
-          shouldIconPulse: true,
-        );
+        customSnackBar('Error', 'Invalid Credential');
       }
       isLoading.value = false;
     });
   }
 
   signUpUser() async {
-    Response res = await _authService.registerUser(userModel.value);
-    if (res.statusCode == 200) {}
+    isLoading.value = true;
+    var res = await _authService.registerUser(userModel.value);
+    log('${res.body}', name: 'res');
+    if (res.statusCode == 200) {
+      var apiKey = generateApiKey();
+      Map data = res.body['user'];
+      data['key'] = apiKey;
+      GetStorage().write('user', data);
+      getUserData();
+      Get.offNamedUntil(AuthScreen.routeName, (route) => false);
+    } else {
+      customSnackBar('Error', 'This User already exist');
+    }
+    isLoading.value = false;
   }
 
   getUserData() {
@@ -114,7 +112,7 @@ class AuthController extends GetxController {
     log('$userData', name: 'stored_user');
   }
 
-  void logoutUser() {
+  logoutUser() {
     GetStorage().remove('user');
     Get.offNamed(AuthScreen.routeName);
   }

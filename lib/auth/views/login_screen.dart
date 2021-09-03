@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:sell_begin/auth/controller/auth_controller.dart';
-import 'package:sell_begin/auth/view/signup_screen.dart';
-import 'package:sell_begin/commons/utils/input_decoration.dart';
-import 'package:sell_begin/commons/widgets/custom_button.dart';
-import 'package:sell_begin/commons/widgets/loading_indicator.dart';
+import 'package:sell_begin/auth/auth_controller.dart';
+import 'package:sell_begin/auth/views/signup_screen.dart';
+import 'package:sell_begin/utils/input_decoration.dart';
+import 'package:sell_begin/widgets/custom_button.dart';
+import 'package:sell_begin/widgets/loading_indicator.dart';
 
 class LogInScreen extends StatefulWidget {
   static const String routeName = '/login';
@@ -18,7 +18,7 @@ class LogInScreen extends StatefulWidget {
 class _LogInScreenState extends State<LogInScreen> {
   GlobalKey<FormState> _formKeyLogin = GlobalKey<FormState>();
 
-  final authController = Get.find<AuthController>();
+  final _authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -67,21 +67,23 @@ class _LogInScreenState extends State<LogInScreen> {
                 ],
               ),
               const SizedBox(height: 16.0),
-              authController.isLoading.value
-                  ? LoadingIndicator()
-                  : CustomButton(
-                      btnTxt: 'Login',
-                      onPressed: () {
-                        if (_formKeyLogin.currentState!.validate()) {
-                          _formKeyLogin.currentState!.save();
-                          FocusScopeNode currentFocus = FocusScope.of(context);
-                          if (!currentFocus.hasPrimaryFocus) {
-                            currentFocus.unfocus();
+              Obx(
+                () => _authController.isLoading.value
+                    ? LoadingIndicator()
+                    : CustomButton(
+                        btnTxt: 'Login',
+                        onPressed: () {
+                          if (_formKeyLogin.currentState!.validate()) {
+                            _formKeyLogin.currentState!.save();
+                            FocusScopeNode currentFocus = FocusScope.of(context);
+                            if (!currentFocus.hasPrimaryFocus) {
+                              currentFocus.unfocus();
+                            }
+                            _authController.checkUser();
                           }
-                          authController.checkUser();
-                        }
-                      },
-                    ),
+                        },
+                      ),
+              ),
               const SizedBox(height: 16.0),
               _buildOrDivider(),
               const SizedBox(height: 18.0),
@@ -117,7 +119,7 @@ class _LogInScreenState extends State<LogInScreen> {
   Widget _buildEmailTextField() {
     return TextFormField(
       onChanged: (value) {
-        authController.userModel.update((val) {
+        _authController.userModel.update((val) {
           val!.email = value.trim();
         });
       },
@@ -159,15 +161,15 @@ class _LogInScreenState extends State<LogInScreen> {
     return Obx(
       () => TextFormField(
         onChanged: (value) {
-          authController.userModel.update((val) {
+          _authController.userModel.update((val) {
             val!.password = value;
           });
         },
-        obscureText: authController.obscureText.value,
+        obscureText: _authController.obscureText.value,
         validator: (value) {
           if (value!.isEmpty) {
             return 'Required';
-          } else if (authController.userModel.value.password.length < 6) {
+          } else if (_authController.userModel.value.password.length < 6) {
             return 'Too short';
           }
           return null;
@@ -178,10 +180,10 @@ class _LogInScreenState extends State<LogInScreen> {
           txt: 'Password',
           suffixIcon: GestureDetector(
             onTap: () {
-              authController.obscureText.value = !authController.obscureText.value;
+              _authController.obscureText.value = !_authController.obscureText.value;
             },
             child: Icon(
-              authController.obscureText.value ? Icons.visibility : Icons.visibility_off,
+              _authController.obscureText.value ? Icons.visibility : Icons.visibility_off,
             ),
           ),
         ),

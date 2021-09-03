@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:sell_begin/auth/binding/auth_binding.dart';
-import 'package:sell_begin/auth/view/auth_screen.dart';
-import 'package:sell_begin/auth/view/login_screen.dart';
-import 'package:sell_begin/auth/view/signup_screen.dart';
-import 'package:sell_begin/commons/utils/app_theme.dart';
+import 'package:sell_begin/auth/auth_binding.dart';
+import 'package:sell_begin/auth/views/auth_screen.dart';
+import 'package:sell_begin/auth/views/login_screen.dart';
+import 'package:sell_begin/auth/views/signup_screen.dart';
+import 'package:sell_begin/chat/views/chat_screen.dart';
 import 'package:sell_begin/home/view/home_screen.dart';
-import 'package:sell_begin/search_product/view/search_product_screen.dart';
+import 'package:sell_begin/product/views/create_product_ad.dart';
+import 'package:sell_begin/product/views/search_product_screen.dart';
 import 'package:sell_begin/tab/view/tab_screen.dart';
+import 'package:sell_begin/user_profile/view/user_profile_screen.dart';
+import 'package:sell_begin/utils/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,6 +48,19 @@ class MyApp extends StatelessWidget {
           ),
           GetPage(name: SignUpScreen.routeName, page: () => SignUpScreen(), binding: AuthBinding()),
           GetPage(name: SearchProductScreen.routeName, page: () => SearchProductScreen()),
+          GetPage(
+            name: UserProfileScreen.routeName,
+            page: () => UserProfileScreen(),
+            binding: AuthBinding(),
+          ),
+          GetPage(
+            name: ChatScreen.routeName,
+            page: () => ChatScreen(),
+          ),
+          GetPage(
+            name: CreateProductAdScreen.routeName,
+            page: () => CreateProductAdScreen(),
+          ),
         ],
       );
 }
