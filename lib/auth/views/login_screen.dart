@@ -79,7 +79,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             if (!currentFocus.hasPrimaryFocus) {
                               currentFocus.unfocus();
                             }
-                            _authController.checkUser();
+                            _authController.loginUser();
                           }
                         },
                       ),

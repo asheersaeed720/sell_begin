@@ -66,28 +66,23 @@ class AuthController extends GetxController {
     return encrypted.base64;
   }
 
-  checkUser() {
+  loginUser() async {
     isLoading.value = true;
-    _authService.checkUser(userModel.value).then((res) async {
-      log('${res.body}', name: 'res');
-      if (res.statusCode == 200) {
-        if (res.body['found']) {
-          var apiKey = generateApiKey();
-          var loginRes = await _authService.loginUser(apiKey);
-          if (loginRes.statusCode == 200) {
-            Map data = loginRes.body['user'];
-            data['key'] = apiKey;
-            GetStorage getStorage = GetStorage();
-            getStorage.write('user', data);
-            getUserData();
-            Get.offNamed(AuthScreen.routeName);
-          }
-        }
-      } else {
-        customSnackBar('Error', 'Invalid Credential');
+    final response = await _authService.loginUser(userModel.value);
+    log('${response.body}');
+    if (response.statusCode == 200) {
+      if (response.body['found']) {
+        var apiKey = generateApiKey();
+        Map data = response.body['user'];
+        data['key'] = apiKey;
+        GetStorage().write('user', data);
+        getUserData();
+        Get.offNamed(AuthScreen.routeName);
       }
-      isLoading.value = false;
-    });
+    } else {
+      customSnackBar('Error', 'Invalid Credential');
+    }
+    isLoading.value = false;
   }
 
   signUpUser() async {
@@ -114,6 +109,7 @@ class AuthController extends GetxController {
 
   logoutUser() {
     GetStorage().remove('user');
-    Get.offNamed(AuthScreen.routeName);
+    GetStorage().remove('locationData');
+    Get.offAllNamed(AuthScreen.routeName);
   }
 }

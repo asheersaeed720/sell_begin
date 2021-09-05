@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
+import 'package:sell_begin/location/location_controller.dart';
 import 'package:sell_begin/product/views/search_product_screen.dart';
 import 'package:sell_begin/utils/input_decoration.dart';
 import 'package:sell_begin/widgets/product_item.dart';
@@ -8,7 +9,9 @@ import 'package:sell_begin/widgets/product_item.dart';
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/home';
 
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
+
+  final _locationController = Get.find<LocationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +75,8 @@ class HomeScreen extends StatelessWidget {
           );
         },
         child: TextFormField(
+          initialValue:
+              '${_locationController.locationData.value['countryName']}, ${_locationController.locationData.value['cityName']}',
           enabled: false,
           decoration: buildTextFieldInputDecoration(context,
               prefixIconUrl: 'assets/icons/location.png', txt: 'City'),

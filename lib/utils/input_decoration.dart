@@ -5,6 +5,8 @@ InputDecoration buildTextFieldInputDecoration(
   required String txt,
   Color fillColor = Colors.white,
   String prefixIconUrl = '',
+  String suffixIconUrl = '',
+  Function? suffixFunction,
 }) {
   return InputDecoration(
     contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 22),
@@ -22,11 +24,23 @@ InputDecoration buildTextFieldInputDecoration(
     filled: true,
     prefixIcon: prefixIconUrl.isNotEmpty
         ? Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 10.0),
+            padding: const EdgeInsets.only(left: 18.0, right: 8.0),
             child: Image.asset(prefixIconUrl),
           )
         : SizedBox.shrink(),
     prefixIconConstraints: BoxConstraints(minWidth: 23, maxHeight: 20),
+    suffixIcon: suffixIconUrl.isNotEmpty
+        ? Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: InkWell(
+              onTap: () {
+                suffixFunction!();
+              },
+              child: Image.asset(suffixIconUrl),
+            ),
+          )
+        : SizedBox.shrink(),
+    suffixIconConstraints: BoxConstraints(minWidth: 20, maxHeight: 17),
   );
 }
 

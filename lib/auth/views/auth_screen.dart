@@ -1,13 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sell_begin/auth/auth_controller.dart';
 import 'package:sell_begin/auth/views/login_screen.dart';
-import 'package:sell_begin/auth/views/signup_screen.dart';
+import 'package:sell_begin/location/location_controller.dart';
+import 'package:sell_begin/location/views/select_location_screen.dart';
 import 'package:sell_begin/tab/view/tab_screen.dart';
-import 'package:sell_begin/user_profile/view/user_profile_screen.dart';
 
 class AuthScreen extends StatefulWidget {
   static const String routeName = '/auth';
@@ -20,19 +18,21 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   final _authController = Get.find<AuthController>();
-
-  var arg = Get.arguments;
+  final _locationController = Get.find<LocationController>();
 
   @override
   void initState() {
-    print('arg $arg');
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       _authController.getUserData();
-      var data = _authController.userData;
-      if (data.isEmpty) {
+      _locationController.getLocation();
+      if (_authController.userData.isEmpty) {
         Get.offNamed(LogInScreen.routeName);
       } else {
-        Get.offNamed(TabsScreen.routeName);
+        if (_locationController.locationData.value.isEmpty) {
+          Get.offNamed(SelectLocationScreen.routeName);
+        } else {
+          Get.offNamed(TabsScreen.routeName);
+        }
       }
     });
     super.initState();

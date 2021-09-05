@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sell_begin/chat/views/chat_screen.dart';
 import 'package:sell_begin/home/view/home_screen.dart';
 import 'package:sell_begin/product/views/create_product_ad.dart';
@@ -27,7 +30,7 @@ class _TabsScreenState extends State<TabsScreen> {
           HomeScreen(),
           ChatScreen(),
           CreateProductAdScreen(),
-          HomeScreen(),
+          CreateProductAdScreen(),
           UserProfileScreen(),
         ],
       ),

@@ -8,15 +8,15 @@ class AuthService extends GetConnect {
     super.onInit();
   }
 
-  Future<Response> checkUser(UserModel user) {
+  Future<Response> loginUser(UserModel user) {
     var loginFormData = FormData({
-      'identifier': '${user.email}',
+      'email': '${user.email}',
       'password': '${user.password}',
     });
-    return post('Auth/checkuser', loginFormData, contentType: 'form-data');
+    return post('Auth/login', loginFormData, contentType: 'form-data');
   }
 
-  Future<Response> loginUser(apiKey) => post('Auth/login', {}, headers: {'X-API-KEY': '$apiKey'});
+  // Future<Response> loginUser(apiKey) => post('Auth/login', {}, headers: {'X-API-KEY': '$apiKey'});
 
   Future<Response> registerUser(UserModel user) {
     var signUpFormData = FormData({

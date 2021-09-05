@@ -8,6 +8,9 @@ import 'package:sell_begin/auth/views/login_screen.dart';
 import 'package:sell_begin/auth/views/signup_screen.dart';
 import 'package:sell_begin/chat/views/chat_screen.dart';
 import 'package:sell_begin/home/view/home_screen.dart';
+import 'package:sell_begin/location/location_binding.dart';
+import 'package:sell_begin/location/location_controller.dart';
+import 'package:sell_begin/location/views/select_location_screen.dart';
 import 'package:sell_begin/product/views/create_product_ad.dart';
 import 'package:sell_begin/product/views/search_product_screen.dart';
 import 'package:sell_begin/tab/view/tab_screen.dart';
@@ -38,16 +41,24 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: AuthScreen.routeName,
         getPages: [
-          GetPage(name: AuthScreen.routeName, page: () => AuthScreen(), binding: AuthBinding()),
+          GetPage(
+            name: AuthScreen.routeName,
+            page: () => AuthScreen(),
+            bindings: [AuthBinding(), LocationBinding()],
+          ),
+          GetPage(name: HomeScreen.routeName, page: () => HomeScreen(), binding: LocationBinding()),
           GetPage(name: TabsScreen.routeName, page: () => TabsScreen(), binding: AuthBinding()),
-          GetPage(name: HomeScreen.routeName, page: () => HomeScreen()),
           GetPage(
             name: LogInScreen.routeName,
             page: () => LogInScreen(),
             binding: AuthBinding(),
           ),
           GetPage(name: SignUpScreen.routeName, page: () => SignUpScreen(), binding: AuthBinding()),
-          GetPage(name: SearchProductScreen.routeName, page: () => SearchProductScreen()),
+          GetPage(
+            name: SearchProductScreen.routeName,
+            page: () => SearchProductScreen(),
+            binding: LocationBinding(),
+          ),
           GetPage(
             name: UserProfileScreen.routeName,
             page: () => UserProfileScreen(),
@@ -60,6 +71,11 @@ class MyApp extends StatelessWidget {
           GetPage(
             name: CreateProductAdScreen.routeName,
             page: () => CreateProductAdScreen(),
+          ),
+          GetPage(
+            name: SelectLocationScreen.routeName,
+            page: () => SelectLocationScreen(),
+            bindings: [AuthBinding(), LocationBinding()],
           ),
         ],
       );

@@ -5,7 +5,7 @@ import 'package:sell_begin/services/auth_service.dart';
 class AuthBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(AuthService());
-    Get.put(AuthController());
+    Get.put(AuthService(), permanent: true);
+    Get.put(AuthController(), permanent: true);
   }
 }
