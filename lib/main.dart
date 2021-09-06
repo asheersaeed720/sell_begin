@@ -6,6 +6,7 @@ import 'package:sell_begin/auth/auth_binding.dart';
 import 'package:sell_begin/auth/views/auth_screen.dart';
 import 'package:sell_begin/auth/views/login_screen.dart';
 import 'package:sell_begin/auth/views/signup_screen.dart';
+import 'package:sell_begin/chat/chat_binding.dart';
 import 'package:sell_begin/chat/views/chat_screen.dart';
 import 'package:sell_begin/home/view/home_screen.dart';
 import 'package:sell_begin/location/location_binding.dart';
@@ -46,14 +47,24 @@ class MyApp extends StatelessWidget {
             page: () => AuthScreen(),
             bindings: [AuthBinding(), LocationBinding()],
           ),
-          GetPage(name: HomeScreen.routeName, page: () => HomeScreen(), binding: LocationBinding()),
-          GetPage(name: TabsScreen.routeName, page: () => TabsScreen(), binding: AuthBinding()),
+          GetPage(
+              name: HomeScreen.routeName,
+              page: () => HomeScreen(),
+              binding: LocationBinding()),
+          GetPage(
+              name: TabsScreen.routeName,
+              page: () => TabsScreen(),
+              binding: AuthBinding()),
+
           GetPage(
             name: LogInScreen.routeName,
             page: () => LogInScreen(),
             binding: AuthBinding(),
           ),
-          GetPage(name: SignUpScreen.routeName, page: () => SignUpScreen(), binding: AuthBinding()),
+          GetPage(
+              name: SignUpScreen.routeName,
+              page: () => SignUpScreen(),
+              binding: AuthBinding()),
           GetPage(
             name: SearchProductScreen.routeName,
             page: () => SearchProductScreen(),
@@ -67,7 +78,9 @@ class MyApp extends StatelessWidget {
           GetPage(
             name: ChatScreen.routeName,
             page: () => ChatScreen(),
+            binding: ChatBinding(),
           ),
+
           GetPage(
             name: CreateProductAdScreen.routeName,
             page: () => CreateProductAdScreen(),
