@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sell_begin/auth/auth_controller.dart';
 import 'package:sell_begin/auth/views/login_screen.dart';
 import 'package:sell_begin/location/location_controller.dart';
@@ -24,9 +27,17 @@ class _AuthScreenState extends State<AuthScreen> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       _authController.getUserData();
+      _authController.getUserOldData();
       _locationController.getLocation();
+      log('noob ${_authController.userLastData}');
       if (_authController.userData.isEmpty) {
-        Get.offNamed(LogInScreen.routeName);
+        Get.offNamed(
+          LogInScreen.routeName,
+          arguments: {
+            'email': '${_authController.userLastData['email']}',
+            'password': '${_authController.userLastData['password']}',
+          },
+        );
       } else {
         if (_locationController.locationData.value.isEmpty) {
           Get.offNamed(SelectLocationScreen.routeName);

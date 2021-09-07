@@ -20,6 +20,8 @@ class _LogInScreenState extends State<LogInScreen> {
 
   final _authController = Get.find<AuthController>();
 
+  final Map<String, dynamic> _args = Get.arguments;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +41,6 @@ class _LogInScreenState extends State<LogInScreen> {
                   fit: BoxFit.scaleDown,
                 ),
               ),
-              const SizedBox(height: 32.0),
               Text('Email'),
               const SizedBox(height: 10.0),
               _buildEmailTextField(),
@@ -117,7 +118,11 @@ class _LogInScreenState extends State<LogInScreen> {
   }
 
   Widget _buildEmailTextField() {
+    _authController.userModel.update((val) {
+      val!.email = _args.isEmpty ? '' : _args['email'].trim();
+    });
     return TextFormField(
+      initialValue: _args['email'],
       onChanged: (value) {
         _authController.userModel.update((val) {
           val!.email = value.trim();

@@ -7,6 +7,7 @@ import 'package:sell_begin/auth/views/auth_screen.dart';
 import 'package:sell_begin/services/auth_service.dart';
 import 'package:encrypt/encrypt.dart' as EncryptPack;
 import 'package:sell_begin/utils/custom_snack_bar.dart';
+import 'package:sell_begin/utils/secret.dart';
 
 class AuthController extends GetxController {
   final _authService = Get.find<AuthService>();
@@ -16,6 +17,7 @@ class AuthController extends GetxController {
   RxBool isLoading = false.obs;
 
   RxMap userData = Map().obs;
+  RxMap userLastData = Map().obs;
 
   Rx<UserModel> userModel = UserModel().obs;
 
@@ -58,8 +60,8 @@ class AuthController extends GetxController {
 
   String generateApiKey() {
     final jsonString = '{"identifier": "${userModel.value.email}"}';
-    final key = EncryptPack.Key.fromUtf8('aass2xQ5gk56hcFpd208U0AsI8mxaaoh');
-    final iv = EncryptPack.IV.fromUtf8('asdzxcbdfbhessad');
+    final key = EncryptPack.Key.fromUtf8(Secret.key);
+    final iv = EncryptPack.IV.fromUtf8(Secret.iv);
 
     final encrypter = EncryptPack.Encrypter(EncryptPack.AES(key, mode: EncryptPack.AESMode.cbc));
     final encrypted = encrypter.encrypt(jsonString, iv: iv);
@@ -75,8 +77,10 @@ class AuthController extends GetxController {
         var apiKey = generateApiKey();
         Map data = response.body['user'];
         data['key'] = apiKey;
+        GetStorage().remove('userLastData');
         GetStorage().write('user', data);
         getUserData();
+
         Get.offNamed(AuthScreen.routeName);
       }
     } else {
@@ -107,9 +111,17 @@ class AuthController extends GetxController {
     log('$userData', name: 'stored_user');
   }
 
+  getUserOldData() {
+    userLastData.value =
+        GetStorage().read('userLastData') == null ? {} : GetStorage().read('userLastData');
+    log('$userLastData', name: 'old_user_data');
+  }
+
   logoutUser() {
-    GetStorage().remove('user');
-    GetStorage().remove('locationData');
+    var storage = GetStorage();
+    storage.write('userLastData', storage.read('user'));
+    storage.remove('user');
+    // storage.remove('locationData');
     Get.offAllNamed(AuthScreen.routeName);
   }
 }
