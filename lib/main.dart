@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
             name: LogInScreen.routeName,
             page: () => LogInScreen(),
           ),
-          GetPage(name: SignUpScreen.routeName, page: () => SignUpScreen(), binding: AuthBinding()),
+          GetPage(name: SignUpScreen.routeName, page: () => SignUpScreen()),
           GetPage(
             name: SearchProductScreen.routeName,
             page: () => SearchProductScreen(),
