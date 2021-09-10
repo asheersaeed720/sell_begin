@@ -76,7 +76,8 @@ class _LogInScreenState extends State<LogInScreen> {
                         onPressed: () {
                           if (_formKeyLogin.currentState!.validate()) {
                             _formKeyLogin.currentState!.save();
-                            FocusScopeNode currentFocus = FocusScope.of(context);
+                            FocusScopeNode currentFocus =
+                                FocusScope.of(context);
                             if (!currentFocus.hasPrimaryFocus) {
                               currentFocus.unfocus();
                             }
@@ -122,7 +123,7 @@ class _LogInScreenState extends State<LogInScreen> {
       val!.email = _args.isEmpty ? '' : _args['email'].trim();
     });
     return TextFormField(
-      initialValue: _args['email'],
+      initialValue: (_args['email'] != "null") ? _args['email'] : "",
       onChanged: (value) {
         _authController.userModel.update((val) {
           val!.email = value.trim();
@@ -185,10 +186,13 @@ class _LogInScreenState extends State<LogInScreen> {
           txt: 'Password',
           suffixIcon: GestureDetector(
             onTap: () {
-              _authController.obscureText.value = !_authController.obscureText.value;
+              _authController.obscureText.value =
+                  !_authController.obscureText.value;
             },
             child: Icon(
-              _authController.obscureText.value ? Icons.visibility : Icons.visibility_off,
+              _authController.obscureText.value
+                  ? Icons.visibility
+                  : Icons.visibility_off,
             ),
           ),
         ),
