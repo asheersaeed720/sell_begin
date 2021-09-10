@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Sell Begin',
+        initialBinding: AuthBinding(),
         theme: ThemeData(
           primarySwatch: customPrimaryColor,
           accentColor: customAccentColor,
@@ -45,26 +46,18 @@ class MyApp extends StatelessWidget {
           GetPage(
             name: AuthScreen.routeName,
             page: () => AuthScreen(),
-            bindings: [AuthBinding(), LocationBinding()],
+            binding: LocationBinding(),
           ),
+          GetPage(name: HomeScreen.routeName, page: () => HomeScreen(), binding: LocationBinding()),
           GetPage(
-              name: HomeScreen.routeName,
-              page: () => HomeScreen(),
-              binding: LocationBinding()),
-          GetPage(
-              name: TabsScreen.routeName,
-              page: () => TabsScreen(),
-              binding: AuthBinding()),
-
+            name: TabsScreen.routeName,
+            page: () => TabsScreen(),
+          ),
           GetPage(
             name: LogInScreen.routeName,
             page: () => LogInScreen(),
-            binding: AuthBinding(),
           ),
-          GetPage(
-              name: SignUpScreen.routeName,
-              page: () => SignUpScreen(),
-              binding: AuthBinding()),
+          GetPage(name: SignUpScreen.routeName, page: () => SignUpScreen(), binding: AuthBinding()),
           GetPage(
             name: SearchProductScreen.routeName,
             page: () => SearchProductScreen(),
@@ -73,14 +66,12 @@ class MyApp extends StatelessWidget {
           GetPage(
             name: UserProfileScreen.routeName,
             page: () => UserProfileScreen(),
-            binding: AuthBinding(),
           ),
           GetPage(
             name: ChatScreen.routeName,
             page: () => ChatScreen(),
             binding: ChatBinding(),
           ),
-
           GetPage(
             name: CreateProductAdScreen.routeName,
             page: () => CreateProductAdScreen(),
@@ -88,7 +79,7 @@ class MyApp extends StatelessWidget {
           GetPage(
             name: SelectLocationScreen.routeName,
             page: () => SelectLocationScreen(),
-            bindings: [AuthBinding(), LocationBinding()],
+            binding: LocationBinding(),
           ),
         ],
       );
