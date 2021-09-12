@@ -12,7 +12,20 @@ class ChatController extends GetxController {
   final _chatService = Get.find<ChatService>();
 
   Future<List<Chat>> getConversation() async {
-    return (await _chatService.getConversation() as List).map((i) => Chat.fromJson(i)).toList();
+    return await _chatService.getConversation();
   }
 
+  Future<List<Chat>> getChats(id) async {
+    return await _chatService.getChats(id);
+  }
+
+  Future<bool> sendMessage(otherUser, msg) async {
+    return await _chatService.sendMessage(otherUser, msg);
+  }
+
+  UserModel getUserData() {
+    UserModel userModel =
+        GetStorage().read('user') == null ? {} : GetStorage().read('user');
+    return userModel;
+  }
 }

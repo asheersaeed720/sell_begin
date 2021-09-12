@@ -7,6 +7,7 @@ import 'package:sell_begin/auth/views/auth_screen.dart';
 import 'package:sell_begin/auth/views/login_screen.dart';
 import 'package:sell_begin/auth/views/signup_screen.dart';
 import 'package:sell_begin/chat/chat_binding.dart';
+import 'package:sell_begin/chat/views/chat_detail_screen.dart';
 import 'package:sell_begin/chat/views/chat_screen.dart';
 import 'package:sell_begin/home/view/home_screen.dart';
 import 'package:sell_begin/location/location_binding.dart';
@@ -80,7 +81,11 @@ class MyApp extends StatelessWidget {
             page: () => ChatScreen(),
             binding: ChatBinding(),
           ),
-
+          GetPage(
+            name: ChatDetailScreen.routeName,
+            page: () => ChatDetailScreen(),
+            binding: ChatBinding(),
+          ),
           GetPage(
             name: CreateProductAdScreen.routeName,
             page: () => CreateProductAdScreen(),

@@ -6,7 +6,7 @@ class Chat {
     this.message,
     this.createdAt,
     this.status,
-    this.fromUser,
+    // this.fromUser,
   });
 
   String? id;
@@ -15,7 +15,7 @@ class Chat {
   String? message;
   DateTime? createdAt;
   String? status;
-  FromUser? fromUser;
+  // FromUser? fromUser;
 
   factory Chat.fromJson(Map<String, dynamic> json) => Chat(
         id: json["id"],
@@ -24,7 +24,7 @@ class Chat {
         message: json["message"],
         createdAt: DateTime.parse(json["created_at"]),
         status: json["status"],
-        fromUser: FromUser.fromJson(json["From_User"]),
+        // fromUser: FromUser.fromJson(json["From_User"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -34,7 +34,7 @@ class Chat {
         "message": message,
         "created_at": createdAt?.toIso8601String(),
         "status": status,
-        "From_User": fromUser?.toJson(),
+        // "From_User": fromUser?.toJson(),
       };
 }
 
